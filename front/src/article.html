@@ -1,0 +1,70 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog</title>
+
+    <link rel="stylesheet" href="article.css">
+    <script src="js/marked-0.3.4.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css">
+    <script src="js/jquery-3.6.3.min.js"></script>
+
+</head>
+<body>
+
+<a href="index.html"><header>Note, code, or forget</header></a>
+
+<section>
+    <div class="title-wrap">
+        <div class="title"></div>
+        <div class="time"></div>
+    </div>
+    <div id='$m' class="markdown-body"></div>
+</section>
+
+
+<!--侧边固定小方块-->
+<div id="aside-box-wrap">
+    <a href="./add.html" title="添加文章">
+        <div class="aside-box add-article"></div>
+    </a>
+    <a href="javascript:void(0)" id="back-to-top">
+        <div class="aside-box go-top"></div>
+    </a>
+</div>
+
+
+</body>
+
+<script>
+    //获取文章内容，并使用marked渲染
+    $.ajax({
+        type: 'get',
+        url: 'http://1.12.222.51:9002/c'+'?id='+getQueryString('id'),
+        success(data){
+            console.log(getQueryString('id'));
+            $m.innerHTML = marked.parse(data.content);
+            $('.title').html(data.title);
+            $('.time').html(data.completionTime.substring(0,10));
+        }
+    })
+
+    //获得当前页面的参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);   // window.lcation.search 也可以替换成任何想获得参数的 url
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+
+    //回到顶端
+    $('#back-to-top').click(()=>{
+        $('html,body').animate({scrollTop:0},300);
+    });
+</script>
+
+</html>

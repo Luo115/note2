@@ -1,0 +1,81 @@
+body{
+    margin: 0;
+    background-color: #bef1f1;
+}
+
+header{
+    font-size: 60px;
+    font-family: 'forte', serif ;
+    letter-spacing: 6px;
+    color: #8f9347;
+    text-align: center;
+    line-height: 100px;
+    width: 100%;
+    height: 100px;
+    text-decoration: none;
+}
+a[href="index.html"]{
+    text-decoration: none;
+}
+section{
+    background-color: white;
+    white-space: pre-wrap;
+    width: 90%;
+    position: relative;
+    left: 5%;
+    box-shadow: 1px 1px 7px black;
+    border-radius: 25px;
+    /* 防止圆角边框被背景颜色覆盖~ */
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.markdown-body{
+    padding: 20px;
+}
+.title-wrap{
+    height: 145px;
+    border-bottom: 3px solid antiquewhite;
+    padding-left: 20px;
+}
+.title{
+    font-weight: bold;
+    font-size: 38px;
+}
+.time{
+    position: relative;
+    bottom: 27px;
+}
+/* 侧边盒子 */
+#aside-box-wrap{
+    position: fixed;
+    height: 150px;
+    width: 75px;
+    top: 515px;
+    left: 1155px;
+    background-color: #7fff8b69;
+    border-radius: 10px;
+}
+#aside-box-wrap a{
+    display: block;
+}
+.aside-box{
+    background-size: contain;
+    border-radius: 10px;
+}
+.aside-box:hover{
+    background-color: rgba(127, 255, 139, 0.88);
+}
+.add-article{
+    height: 75px;
+    width: 75px;
+    background-image: url("./picture/write.png");
+    background-repeat: no-repeat;
+}
+.go-top{
+    height: 75px;
+    width: 75px;
+    background-image: url("./picture/go-top.svg");
+    background-repeat: no-repeat;
+}

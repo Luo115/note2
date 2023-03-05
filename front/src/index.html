@@ -1,0 +1,152 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog</title>
+
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<a href="index.html">
+    <header>Note, code, or forget</header>
+</a>
+
+<section>
+
+    <div id="search-box">
+        <input id="search-input">
+        <button id="search-button">搜索</button>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>标题</th>
+            <th>
+                <!--从数据库中动态获取类别-->
+                <select id="typeSelector" >
+                    <option value="全部">全部</option>
+                </select>
+            </th>
+            <th>时间</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+</section>
+
+<!--侧边固定小方块-->
+<div id="aside-box-wrap">
+    <a href="./add.html" title="添加文章">
+        <div class="aside-box add-article"></div>
+    </a>
+    <a href="javascript:void(0)" id="back-to-top">
+        <div class="aside-box go-top"></div>
+    </a>
+</div>
+
+
+
+</body>
+<script src="js/jquery-3.6.3.min.js"></script>
+<script>
+
+    //获取所有类别
+    $.ajax({
+        type: 'get',
+        url: 'http://1.12.222.51:9002/categories',
+        success(data) {
+            for (let i = 0; i < data.length; i++) {
+                let option = document.createElement('option');
+                option.textContent = data[i];
+                option.setAttribute('value', data[i]);
+                $('select').append(option);
+            }
+        }
+    });
+
+    //  首页table中展示的文章数据
+    $.ajax({
+        type: 'get',
+        url: 'http://1.12.222.51:9002/b',
+        success(data) {
+            for (let i = 0; i < data.length; i++) {
+                //创建tr和3个td
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                let td3 = document.createElement('td');
+                tr.append(td1, td2, td3);
+                td1.textContent = data[i].title;
+                td2.textContent = data[i].category;
+                td3.textContent = data[i].completionTime.substring(0, 10);
+
+                tr.onclick = () => {
+                    window.location.href = `article.html?id=${data[i].id}`;
+                };
+                $('tbody').append(tr);
+            }
+            console.log(data);
+        }
+    });
+
+    //切换类别
+    $('#typeSelector').change(() => {
+        let currentVal = $('#typeSelector').val();
+        let $tr = $('tbody tr');
+        //每次切换，先让全部文章都可见
+        $tr.each((index, item) => {
+            $(item).show();
+        })
+        //如果展示全部，则直接返回，不再筛选
+        if (currentVal === '全部') {
+            return;
+        }
+        //筛选 留下符号条件的
+        $tr.each((index, item) => {
+            if ($(item).children('td:nth-child(2)').text() !== currentVal) {
+                $(item).hide();
+            }
+        })
+    });
+    //按标题搜索
+    $('#search-button').click(()=>{
+        let inputVal = $('#search-input').val();
+        let $tr = $('tbody tr');
+        //每次切换，先让全部文章都可见
+        $tr.each((index, item) => {
+            $(item).show();
+        })
+        //如果展示全部，则展示全部，直接返回，不再筛选
+        if (inputVal === '') {
+            //此处使用prop()，如果使用attr(),多次切换selected不会生效(固有属性———>prop；自定义属性————>attr)
+            $("option[value='全部']").prop('selected',true);
+            console.log('进入方法');
+            return;
+        }
+        //筛选 留下符号条件的
+        $tr.each((index, item) => {
+            if ($(item).children('td:nth-child(1)').text().indexOf(inputVal) === -1) {
+                $(item).hide();
+            }
+        })
+    });
+    //回到顶端
+    $('#back-to-top').click(()=>{
+        $('html,body').animate({scrollTop:0},300);
+    });
+
+    //输入框按回车搜索
+    $('#search-input').keyup((event)=>{
+        if (event.which === 13){
+            $('#search-button').click();
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haha.note2.mapper.ArticleMapper">
+    <resultMap id="articleResult" type="com.haha.note2.pojo.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title" javaType="String" jdbcType="VARCHAR"/>
+        <result property="content" column="content" javaType="String" jdbcType="LONGVARCHAR"/>
+        <result property="completionTime" column="completionTime" javaType="Date" jdbcType="DATE"/>
+        <result property="updateTime" column="updateTime" javaType="Date" jdbcType="DATE"/>
+        <result property="category" column="category" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <select id="findAllArticle" resultMap="articleResult">
+        select * from article
+    </select>
+
+    <select id="articleForHomePage" resultType="article">
+        select id,title,category,completionTime from article
+    </select>
+
+    <select id="findArticleById" resultType="article">
+        select title, content, completionTime from article where id = #{id};
+    </select>
+
+    <insert id="addArticle" parameterType="article">
+        insert into article(title,content,completionTime,category)
+        values (#{title},#{content},#{completionTime},#{category})
+    </insert>
+
+</mapper>

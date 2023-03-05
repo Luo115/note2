@@ -1,0 +1,135 @@
+body{
+    margin: 0;
+    background-color: #dfffff;
+}
+
+header{
+    font-size: 60px;
+    font-family: 'forte', serif ;
+    letter-spacing: 6px;
+    color: #8f9347;
+    text-align: center;
+    line-height: 100px;
+    width: 100%;
+    height: 100px;
+    text-decoration: none;
+}
+a[href="index.html"]{
+    text-decoration: none;
+}
+
+table{
+    border-collapse: collapse;
+    background-color: white;
+    width: 90%;
+    position: relative;
+    left: 5%;
+    top: 10px;
+    box-shadow: 1px 1px 7px black;
+    overflow: hidden;
+    border-radius: 25px;
+    padding: 0 10px;
+}
+
+table tbody tr{
+    height: 50px;
+    border-top: 2px solid lightgrey;
+    cursor: pointer;
+}
+table tbody tr:hover{
+    background-color: rgb(205, 201, 201);
+}
+table thead tr{
+    height: 70px;
+}
+
+tbody tr td:first-child{
+    text-align: left;
+    padding-left: 10px;
+}
+
+thead th:nth-child(1) {
+    padding-left: 10px;
+    width: 800px;
+    text-align: left;
+}
+
+thead th:nth-child(2) {
+    width: 150px;
+    text-align: left;
+}
+
+thead th:nth-child(3) {
+    width: 150px;
+    text-align: left;
+}
+
+tr a{
+    display: block;
+}
+/* 侧边盒子 */
+#aside-box-wrap{
+    position: fixed;
+    height: 150px;
+    width: 75px;
+    top: 515px;
+    left: 1155px;
+    background-color: #7fff8b69;
+    border-radius: 10px;
+}
+#aside-box-wrap a{
+    display: block;
+}
+.aside-box{
+    background-size: contain;
+    border-radius: 10px;
+}
+.aside-box:hover{
+    background-color: rgba(127, 255, 139, 0.88);
+}
+.add-article{
+    height: 75px;
+    width: 75px;
+    background-image: url("./picture/write.png");
+    background-repeat: no-repeat;
+}
+.go-top{
+    height: 75px;
+    width: 75px;
+    background-image: url("./picture/go-top.svg");
+    background-repeat: no-repeat;
+}
+
+#search-box{
+    width: auto;
+    height: auto;
+    margin-left: 80px;
+    margin-top: 20px;
+}
+#search-input{
+    width: 500px;
+    height: 48px;
+    font-size: 20px;
+    border-radius: 6px;
+    padding: 10px;
+}
+#search-button{
+    width: 78px;
+    height: 44px;
+    font-size: 17px;
+    border-radius: 6px;
+    margin-left: 18px;
+}
+#search-button:hover{
+    cursor: pointer;
+    background-color: aquamarine;
+}
+
+#typeSelector{
+    width: 82px;
+    height: 30px;
+    position: relative;
+    left: -16px;
+    text-align: center;
+    font-size: 15px;
+}

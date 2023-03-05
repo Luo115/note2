@@ -1,0 +1,103 @@
+<!--editor.md编辑器文件夹必须放在父级目录，同级目录下出现bug-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="editor.md-master/css/editormd.css"/>
+    <link rel="stylesheet" href="add.css">
+</head>
+
+<body>
+
+<form name="editorForm" id="formToUpdate">
+
+    <div class="top-warp">
+
+        <label for="title">
+            标题：<input type="text" name="title" id="title">
+        </label>
+
+        <div id="select-wrap">
+            类别：
+            <select name="category" id="select">
+            </select>
+        </div>
+
+        <input type ="submit" value="保存文章" id="submitButton">
+        <input type="button" value="回到首页" id="backToIndex">
+    </div>
+
+    <div id="test-editor">
+    <textarea style="display:none;" name="content">### 关于 Editor.md
+
+**Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
+    </textarea>
+    </div>
+</form>
+
+</body>
+<!--此处jQuery必须在前面，否则报错    从上至下的执行！！！！！！  -->
+<script src="js/jquery-3.6.3.min.js"></script>
+<script src="js/jquery.form.min.js"></script>
+<script src="editor.md-master/editormd.min.js"></script>
+<script type="text/javascript">
+    let testEditor;
+    //页面一启动就加载的方法 ready()
+    $(function () {
+        testEditor = editormd("test-editor", {
+            width: "1534px",
+            height: "655px",
+            syncScrolling: "single",
+            path: "editor.md-master/lib/", //使用自己的路径
+            saveHTMLToTextarea: true,    // 保存 HTML 到 Textarea
+            emoji: true,
+            theme: "dark",//工具栏主题
+            previewTheme: "dark",//预览主题
+            editorTheme: "pastel-on-dark",//编辑主题
+        });
+    });
+
+
+    $('#backToIndex').on('click', () => {
+            window.location.href = 'index.html';
+        }
+    )
+
+
+    $("#submitButton").on("click", function () {
+        $("#formToUpdate").ajaxSubmit({
+            type: 'post',
+            url: 'http://1.12.222.51:9002/add',
+            success: function () {
+                alert('成功提交！');
+                // window.location.href = 'index.html';
+                window.location.reload();
+            },
+            error: function (XmlHttpRequest, textStatus, errorThrown) {
+                alert('提交失败');
+                console.log(XmlHttpRequest);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        });
+    });
+
+    $.ajax({
+        method: 'get',
+        url: 'http://1.12.222.51:9002/categories',
+        success(data) {
+            for (let i = 0; i < data.length; i++) {
+                let option = document.createElement('option');
+                option.value = data[i];
+                option.text = data[i];
+                $('#select').append(option);
+            }
+        }
+    })
+
+
+
+</script>
+
+</html>
